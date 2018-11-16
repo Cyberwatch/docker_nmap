@@ -5,12 +5,13 @@ FROM debian:9-slim
 ARG NMAP_VERSION="7.70"
 
 # Dependence to build nmap
-ENV BUILD_DEPS="build-essential wget ca-certificates"
+ENV BUILD_DEPS="build-essential wget ca-certificates" \
+    APPLICATION_DEPS="openssl libssl-dev"
 
 WORKDIR /nmap
 
 RUN apt update \
-  && apt install -qq -y --no-install-recommends $BUILD_DEPS \
+  && apt install -qq -y --no-install-recommends $BUILD_DEPS $APPLICATION_DEPS \
   && wget -q https://nmap.org/dist/nmap-$NMAP_VERSION.tar.bz2 \
   && bzip2 -cd nmap-$NMAP_VERSION.tar.bz2 | tar xvf - > /dev/null \
   && cd nmap-$NMAP_VERSION \
